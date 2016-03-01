@@ -311,6 +311,8 @@ class Gem::BasicSpecification
   def have_extensions?; !extensions.empty?; end
 
   def have_file? file, suffixes
+    extname = File.extname(file)
+    file = file.to_s[0..(-1 - extname.length)]
     return true if raw_require_paths.any? do |path|
       base = File.join(gems_dir, full_name, path.untaint, file).untaint
       suffixes.any? { |suf| File.file? base + suf }
